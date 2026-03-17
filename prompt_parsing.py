@@ -16,24 +16,6 @@ def build_A_prompt(question: str) -> List[Dict[str, str]]:
     return [{"role": "system", "content": system}, {"role": "user", "content": question}]
 
 
-def build_A_feedback_prompt(question: str, a_output: str, b_feedback: str) -> List[Dict[str, str]]:
-    system = """A conversation between User and Assistant. The user asks a question, and the Assistant solves it.
-            The assistant first thinks about the reasoning process and then provides the answer.
-            Your final answer should be a single number.
-            The reasoning process and answer are enclosed within <think>...</think> and <answer>...</answer> tags.
-
-            Output format must be exactly:
-            <think> reasoning process here </think>
-            <answer> single numerical answer here </answer>"""
-    user = (
-        f"Question:\n{question}\n\n"
-        f"Your previous response:\n{a_output}\n\n"
-        f"Feedback on your response:\n{b_feedback}\n\n"
-        f"Given this feedback, what is your updated response and answer?"
-    )
-    return [{"role": "system", "content": system}, {"role": "user", "content": user}]
-
-
 def build_B_prompt(question: str, a_output: str) -> List[Dict[str, str]]:
     system = """A conversation between User and Assistant. The user provides:
           1) A question.
